@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -51,6 +53,7 @@ public class Todo {
         this.completed = completed;
     }
 
+    @CreationTimestamp
     public LocalDateTime getCreationDate() {
         return creationDate;
     }
@@ -59,6 +62,7 @@ public class Todo {
         this.creationDate = creationDate;
     }
 
+    @UpdateTimestamp
     public LocalDateTime getUpdateDate() {
         return updateDate;
     }
