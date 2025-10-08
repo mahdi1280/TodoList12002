@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TodoServiceImpl implements TodoService {
 
@@ -36,6 +38,11 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public Page<Todo> findAll(Pageable pageable) {
         return todoRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Todo> findAll() {
+        return todoRepository.findAll();
     }
 
     @Override

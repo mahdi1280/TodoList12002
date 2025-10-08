@@ -5,10 +5,9 @@ import ir.iranianCyber.todo.model.Todo;
 import ir.iranianCyber.todo.service.TodoService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/todos")
@@ -28,5 +27,11 @@ public class TodoController {
         todo.setCompleted(Boolean.FALSE);
         todoService.save(todo);
         return ResponseEntity.ok(todo.getId());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Todo>> findAll() {
+        List<Todo> todos = todoService.findAll();
+        return ResponseEntity.ok(todos);
     }
 }
