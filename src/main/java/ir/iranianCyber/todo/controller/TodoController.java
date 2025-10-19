@@ -34,4 +34,12 @@ public class TodoController {
         List<Todo> todos = todoService.findAll();
         return ResponseEntity.ok(todos);
     }
+
+    @GetMapping("/change-status/{id}")
+    public ResponseEntity<?> changeStatus(@PathVariable int id) {
+        Todo todo = todoService.findById(id);
+        todo.setCompleted(!todo.getCompleted());
+        todoService.save(todo);
+        return ResponseEntity.ok().build();
+    }
 }
