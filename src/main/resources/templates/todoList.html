@@ -7,24 +7,63 @@
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.rtl.min.css"
             rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
     <style>
+        /* ظاهر مودال زیبا و کمی سفارشی */
+        .modal-content {
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+        .modal-header {
+            background: linear-gradient(90deg, rgba(255,110,97,0.08), rgba(255,110,97,0.03));
+            border-bottom: none;
+            padding: 1.25rem 1.5rem;
+        }
+        .modal-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+        .modal-body {
+            padding: 1.25rem 1.5rem;
+            font-size: 0.98rem;
+        }
+        .modal-footer {
+            padding: 1rem 1.25rem;
+            border-top: none;
+        }
+        .btn-cancel {
+            min-width: 100px;
+        }
+        .btn-delete {
+            min-width: 100px;
+            box-shadow: 0 6px 18px rgba(255,80,60,0.12);
+        }
+
+        /* متن و چینش برای حالت RTL */
+        .text-rtl-center { text-align: center; }
         body {
             font-family: "Vazir", sans-serif;
             background: #f9f9ff;
         }
+
         .navbar {
             background: linear-gradient(90deg, #ff7eb3, #ff758c);
         }
+
         .navbar-brand, .nav-link {
             color: #fff !important;
             font-weight: bold;
         }
+
         .container h1 {
             color: #ff5277;
             font-weight: bold;
             margin-bottom: 30px;
             text-align: center;
         }
+
         .btn-main {
             background-color: #ff758c;
             color: #fff;
@@ -34,25 +73,30 @@
             font-size: 1rem;
             transition: 0.3s;
         }
+
         .btn-main:hover {
             background-color: #ff5277;
         }
+
         .todo-card {
             background: #fff;
             border-radius: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin-bottom: 15px;
             transition: 0.3s;
         }
+
         .todo-card.done {
             background: #e0ffe0;
             text-decoration: line-through;
             opacity: 0.8;
         }
+
         .todo-actions button {
             margin-left: 5px;
         }
+
         footer {
             background: #ff758c;
             color: #fff;
@@ -60,6 +104,7 @@
             padding: 20px 0;
             margin-top: 50px;
         }
+
         footer a {
             color: #fff;
             text-decoration: none;
@@ -68,9 +113,42 @@
 </head>
 <body>
 
+
 <!-- 🟣 هدر -->
 <nav class="navbar navbar-expand-lg">
     <div class="container">
+
+        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header d-flex align-items-center">
+                        <div class="me-3">
+            <span class="bg-danger rounded-circle d-inline-flex align-items-center justify-content-center" style="width:46px; height:46px; color:#fff;">
+              <i class="bi bi-exclamation-lg"></i>
+            </span>
+                        </div>
+                        <h5 class="modal-title" id="confirmDeleteLabel">تایید حذف</h5>
+                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="بستن"></button>
+                    </div>
+
+                    <div class="modal-body text-rtl-center">
+                        <p class="mb-0 fs-5">آیا میخوای حذف بکنی؟</p>
+                        <small class="text-muted d-block mt-2">این عملیات قابل بازگشت نیست</small>
+                    </div>
+
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-outline-secondary btn-cancel" data-bs-dismiss="modal">
+                            <i class="bi bi-x-lg"></i> لغو
+                        </button>
+                        <button id="confirmDeleteBtn" type="button" class="btn btn-danger btn-delete">
+                            <i class="bi bi-trash"></i> حذف
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <a class="navbar-brand" href="#">ToDoList ✨</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -97,38 +175,7 @@
 
     <!-- لیست کارها -->
     <div id="todoList">
-        <div class="todo-card d-flex justify-content-between align-items-center">
-            <div>
-                <input type="checkbox" class="form-check-input me-2">
-                <span>خرید نان و شیر از فروشگاه</span>
-            </div>
-            <div class="todo-actions">
-                <button class="btn btn-sm btn-warning">✏️ ویرایش</button>
-                <button class="btn btn-sm btn-danger">🗑 حذف</button>
-            </div>
-        </div>
 
-        <div class="todo-card done d-flex justify-content-between align-items-center">
-            <div>
-                <input type="checkbox" checked class="form-check-input me-2">
-                <span>تمرین روزانه زبان انگلیسی</span>
-            </div>
-            <div class="todo-actions">
-                <button class="btn btn-sm btn-warning">✏️ ویرایش</button>
-                <button class="btn btn-sm btn-danger">🗑 حذف</button>
-            </div>
-        </div>
-
-        <div class="todo-card d-flex justify-content-between align-items-center">
-            <div>
-                <input type="checkbox" class="form-check-input me-2">
-                <span>مطالعه‌ی ۲۰ صفحه از کتاب</span>
-            </div>
-            <div class="todo-actions">
-                <button class="btn btn-sm btn-warning">✏️ ویرایش</button>
-                <button class="btn btn-sm btn-danger">🗑 حذف</button>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -148,7 +195,8 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">توضیحات</label>
-                        <textarea class="form-control" rows="3" placeholder="توضیحی در مورد این کار بنویس..."></textarea>
+                        <textarea class="form-control" rows="3"
+                                  placeholder="توضیحی در مورد این کار بنویس..."></textarea>
                     </div>
                     <button type="submit" class="btn btn-main w-100">ثبت کار</button>
                 </form>
@@ -168,8 +216,9 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
+
+
     // فقط یه نمونه جاوااسکریپت ساده برای تغییر حالت انجام‌شده
     document.querySelectorAll('.todo-card input[type="checkbox"]').forEach(cb => {
         cb.addEventListener('change', e => {
@@ -180,6 +229,7 @@
 
 
     function getData() {
+        document.getElementById("todoList").innerHTML = "";
         fetch("http://localhost:8080/todos")
             .then(response => response.json())
             .then(response => {
@@ -192,18 +242,16 @@
     }
 
 
-
-
     function createCart(todo) {
         let html = `
             <div id="todo-${todo.id}" class="todo-card d-flex justify-content-between align-items-center ${todo.completed ? 'done' : ''}">
             <div>
-                <input onclick="changeStatus(${todo.id})" type="checkbox" ${todo.completed? 'checked': ''} class="form-check-input me-2">
+                <input onclick="changeStatus(${todo.id})" type="checkbox" ${todo.completed ? 'checked' : ''} class="form-check-input me-2">
                 <span>${todo.title}</span>
             </div>
             <div class="todo-actions">
                 <button class="btn btn-sm btn-warning">✏️ ویرایش</button>
-                <button class="btn btn-sm btn-danger">🗑 حذف</button>
+                <button class="btn btn-sm btn-danger" onclick="showModal(${todo.id})" type="button" data-toggle="modal" data-target="#exampleModal">🗑 حذف</button>
             </div>
         </div>
         `;
@@ -212,10 +260,28 @@
         document.getElementById("todoList").innerHTML += html;
     }
 
-    function changeStatus(id) {
-        document.getElementById("todo-"+id).classList.toggle("done");
+    function showModal(id) {
+        const confirmModalEl = document.getElementById('confirmDeleteModal')
+        const confirmModal = new bootstrap.Modal(confirmModalEl)
+        confirmModal.show();
+        document.getElementById("confirmDeleteBtn").addEventListener("click", ()=>{
+            deleteTodo(id);
+            confirmModal.hide();
+        })
     }
+
+
+    function changeStatus(id) {
+        document.getElementById("todo-" + id).classList.toggle("done");
+        fetch("http://localhost:8080/todos/change-status/" + id);
+    }
+
     getData();
+
+    function deleteTodo(id) {
+        fetch("http://localhost:8080/todos/delete/" + id)
+            .then(res => getData());
+    }
 
 </script>
 
