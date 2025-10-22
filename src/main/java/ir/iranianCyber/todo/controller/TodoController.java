@@ -49,4 +49,19 @@ public class TodoController {
         todoService.deleteTodoById(id);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable int id, @RequestBody @Valid TodoDto todoDto) {
+       Todo todo =  todoService.findById(id);
+       todo.setTitle(todoDto.title());
+       todo.setDescription(todoDto.description());
+       todoService.save(todo);
+       return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<Todo>  findById(@PathVariable int id) {
+        Todo todo = todoService.findById(id);
+        return ResponseEntity.ok(todo);
+    }
 }
