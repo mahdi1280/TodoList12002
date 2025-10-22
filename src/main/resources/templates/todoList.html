@@ -250,7 +250,7 @@
                 <span>${todo.title}</span>
             </div>
             <div class="todo-actions">
-                <button class="btn btn-sm btn-warning">✏️ ویرایش</button>
+                <a href="http://localhost:8080/update?id=${todo.id}" class="btn btn-sm btn-warning">✏️ ویرایش</a>
                 <button class="btn btn-sm btn-danger" onclick="showModal(${todo.id})" type="button" data-toggle="modal" data-target="#exampleModal">🗑 حذف</button>
             </div>
         </div>

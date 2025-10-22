@@ -51,12 +51,12 @@ public class TodoController {
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable int id, @RequestBody @Valid TodoDto todoDto) {
+    public ResponseEntity<Integer> update(@PathVariable int id, @RequestBody @Valid TodoDto todoDto) {
        Todo todo =  todoService.findById(id);
        todo.setTitle(todoDto.title());
        todo.setDescription(todoDto.description());
        todoService.save(todo);
-       return ResponseEntity.ok().build();
+       return ResponseEntity.ok(todo.getId());
     }
 
     @GetMapping("/findById/{id}")

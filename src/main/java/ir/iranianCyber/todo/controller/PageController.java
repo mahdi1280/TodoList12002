@@ -20,4 +20,9 @@ public class PageController {
     public String add() {
         return "addTodo";
     }
+
+    @GetMapping("/update")
+    public String update() {
+        return "updateTodo";
+    }
 }
