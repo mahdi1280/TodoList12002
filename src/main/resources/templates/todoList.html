@@ -173,7 +173,47 @@
 
     <!-- لیست کارها -->
     <div id="todoList">
-
+        <div id="loading-div">
+            <div class="card" aria-hidden="true">
+                <div class="card-body">
+                    <h5 class="card-title placeholder-glow row">
+                        <div class="col-10">
+                            <span class="placeholder col-4"></span>
+                        </div>
+                        <div class="col-2">
+                            <span class="placeholder col-5"></span>
+                            <span class="placeholder col-5"></span>
+                        </div>
+                    </h5>
+                </div>
+            </div>
+            <div class="card" aria-hidden="true">
+                <div class="card-body">
+                    <h5 class="card-title placeholder-glow row">
+                        <div class="col-10">
+                            <span class="placeholder col-4"></span>
+                        </div>
+                        <div class="col-2">
+                            <span class="placeholder col-5"></span>
+                            <span class="placeholder col-5"></span>
+                        </div>
+                    </h5>
+                </div>
+            </div>
+            <div class="card" aria-hidden="true">
+                <div class="card-body">
+                    <h5 class="card-title placeholder-glow row">
+                        <div class="col-10">
+                            <span class="placeholder col-4"></span>
+                        </div>
+                        <div class="col-2">
+                            <span class="placeholder col-5"></span>
+                            <span class="placeholder col-5"></span>
+                        </div>
+                    </h5>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -227,15 +267,13 @@
 
 
     function getData() {
-        document.getElementById("todoList").innerHTML = "";
         fetch("http://localhost:8080/todos")
             .then(response => response.json())
             .then(response => {
-                console.log(response)
+                document.getElementById("todoList").innerHTML = "";
                 for (let i = 0; i < response.length; i++) {
                     createCart(response[i]);
                 }
-
             });
     }
 
