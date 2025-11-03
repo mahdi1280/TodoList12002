@@ -25,4 +25,9 @@ public class PageController {
     public String update() {
         return "updateTodo";
     }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
 }
