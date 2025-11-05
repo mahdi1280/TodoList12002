@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.rtl.min.css"
+            rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">username</th>
+            <th scope="col">role</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+
+
+    <script>
+        function getUsers() {
+            fetch("http://localhost:8080/users")
+                .then(response=>response.json())
+                .then(users=> {
+                    for (let i = 0; i < users.length; i++) {
+                        createRow(users[i]);
+                    }
+                })
+        }
+
+        function createRow(user) {
+            let html = `<tr>
+            <th scope="row">${user.username}</th>
+            <td>${user.role}</td>
+        </tr>`;
+
+            document.getElementById("tbody").innerHTML+=html;
+
+        }
+
+        getUsers();
+    </script>
+</div>
+</body>
+</html>

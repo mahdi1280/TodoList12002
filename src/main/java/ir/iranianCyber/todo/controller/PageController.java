@@ -1,5 +1,6 @@
 package ir.iranianCyber.todo.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,5 +38,11 @@ public class PageController {
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+    @GetMapping("/admin/user")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public String adminUser() {
+        return "users";
     }
 }
