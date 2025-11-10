@@ -1,6 +1,7 @@
 package ir.iranianCyber.todo.service;
 
 import ir.iranianCyber.todo.model.Todo;
+import ir.iranianCyber.todo.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,7 +17,7 @@ public interface TodoService {
 
     Page<Todo> findAll(Pageable pageable);
 
-    List<Todo> findAll();
+    List<Todo> findAll(User user);
 
     void deleteTodoById(Integer id);
 }

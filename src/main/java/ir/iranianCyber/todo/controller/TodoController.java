@@ -3,8 +3,13 @@ package ir.iranianCyber.todo.controller;
 import ir.iranianCyber.todo.dto.TodoDto;
 import ir.iranianCyber.todo.model.Todo;
 import ir.iranianCyber.todo.service.TodoService;
+import ir.iranianCyber.todo.service.UserService;
 import jakarta.validation.Valid;
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,9 +19,11 @@ import java.util.List;
 public class TodoController {
 
     private final TodoService todoService;
+    private final UserService userService;
 
-    public TodoController(TodoService todoService) {
+    public TodoController(TodoService todoService, UserService userService) {
         this.todoService = todoService;
+        this.userService = userService;
     }
 
     @PostMapping
@@ -25,13 +32,18 @@ public class TodoController {
         todo.setDescription(todoDto.description());
         todo.setTitle(todoDto.title());
         todo.setCompleted(Boolean.FALSE);
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ir.iranianCyber.todo.model.User myUser = userService.findByUsername(user.getUsername());
+        todo.setUser(myUser);
         todoService.save(todo);
         return ResponseEntity.ok(todo.getId());
     }
 
     @GetMapping
     public ResponseEntity<List<Todo>> findAll() {
-        List<Todo> todos = todoService.findAll();
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ir.iranianCyber.todo.model.User myUser = userService.findByUsername(user.getUsername());
+        List<Todo> todos = todoService.findAll(myUser);
         return ResponseEntity.ok(todos);
     }
 

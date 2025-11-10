@@ -1,6 +1,7 @@
 package ir.iranianCyber.todo.service;
 
 import ir.iranianCyber.todo.model.Todo;
+import ir.iranianCyber.todo.model.User;
 import ir.iranianCyber.todo.myException.NotFoundException;
 import ir.iranianCyber.todo.repository.TodoRepository;
 import org.springframework.data.domain.Page;
@@ -41,8 +42,8 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public List<Todo> findAll() {
-        return todoRepository.findAll();
+    public List<Todo> findAll(User user) {
+        return todoRepository.findAllByUser(user);
     }
 
     @Override
