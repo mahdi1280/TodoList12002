@@ -32,7 +32,7 @@ public class SecurityConfig {
         );
 
         http.authorizeHttpRequests(auth ->
-                auth.requestMatchers("/login", "/").permitAll()
+                auth.requestMatchers("/login", "/", "/register").permitAll()
                         .anyRequest().authenticated());
 
         return http.build();

@@ -45,4 +45,10 @@ public class PageController {
     public String adminUser() {
         return "users";
     }
+
+
+    @GetMapping("/register")
+    public String register() {
+        return "register";
+    }
 }
