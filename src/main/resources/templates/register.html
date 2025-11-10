@@ -95,7 +95,7 @@
     <div class="image"></div>
     <div class="frm">
         <h1>ثبت نام</h1>
-        <form>
+        <form method="post" action="/users/register">
             <div class="form-group">
                 <label for="username">نام کاربری:</label>
                 <input name="username" type="text" class="form-control" id="username" placeholder="نام کاربری را وارد کنید">
@@ -114,5 +114,15 @@
         </form>
     </div>
 </div>
+
+<script>
+    let urlParam = new URLSearchParams(window.location.search);
+    let error = urlParam.get("error");
+
+    if(error) {
+        alert("خطا داری!!")
+    }
+
+</script>
 </body>
 </html>
