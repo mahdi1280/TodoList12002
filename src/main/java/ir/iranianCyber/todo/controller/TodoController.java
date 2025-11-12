@@ -58,6 +58,10 @@ public class TodoController {
     @GetMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
         Todo todo = todoService.findById(id);
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(!todo.getUser().getUsername().equals(user.getUsername()) ) {
+            throw new RuntimeException("todo not found");
+        }
         todoService.deleteTodoById(id);
         return ResponseEntity.ok().build();
     }
